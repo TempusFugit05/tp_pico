@@ -13,24 +13,21 @@ bool tp::adc::is_ready() const
 
 void tp::adc::enable(bool start) const
 {
-    uint32_t* const reg = (uint32_t*)tp::adc_register::CS;
-    *reg = SET_BIT(*reg, (uint32_t)tp::cs_bits::EN, (uint32_t)start);
+    *(uint32_t*)tp::adc_register::CS = SET_BIT(*(uint32_t*)tp::adc_register::CS, (uint32_t)tp::cs_bits::EN, (uint32_t)start);
 }
 
 void tp::adc::start_conversion() const
 {
-    uint32_t* const reg = (uint32_t*)tp::adc_register::CS;
-    *reg = SET_BIT(*reg, (uint32_t)tp::cs_bits::START_ONCE, 1);
+    *(uint32_t*)tp::adc_register::CS = SET_BIT(*(uint32_t*)tp::adc_register::CS, (uint32_t)tp::cs_bits::START_ONCE, 1);
 }
 
 uint32_t tp::adc::read_raw() const
 {
     enable(true);
-    uint32_t* const reg = (uint32_t*)tp::adc_register::CS;
-    *reg = SET_BIT(*reg, (uint32_t)tp::cs_bits::AINSEL, (uint32_t)gpio_number - 26);
+    *(uint32_t*)tp::adc_register::CS = SET_BIT(*(uint32_t*)tp::adc_register::CS, (uint32_t)tp::cs_bits::AINSEL, (uint32_t)gpio_number - 26);
     start_conversion();
     while (!is_ready()){}
-    const uint32_t offset = (sizeof(uint32_t) * 8 - ADC_RESOLUTION_BITS);
+    const uint32_t offset = (sizeof(uint32_t) * 8 - ADC_RESOLUTION_BITS); // Shifting needed to clear the reserved bits of the result register. 
     return (*(uint32_t*)tp::adc_register::RESULT << offset) >> offset;
 }
 

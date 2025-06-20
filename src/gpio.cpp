@@ -7,7 +7,13 @@ tp::gpio::gpio(int gpio_number) : gpio_number(gpio_number){}
 
 tp::gpio::gpio(int gpio_number, tp::GPIO_FUNCTION function) : gpio(gpio_number)
 {
-    io_bank0::set_gpio_function(gpio_number, function);
+    set_function(function);
+}
+
+void tp::gpio::set_function(tp::GPIO_FUNCTION function) const
+{
+    const uint32_t gpio_control_offset = (gpio_number * 8) + 4;
+    *(uint32_t*)((uint32_t)tp::register_offsets::BANK0 + gpio_control_offset) = (uint32_t)function;
 }
 
 void tp::gpio::direction(tp::GPIO_INPUT_DIRECTION direction) const

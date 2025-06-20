@@ -35,10 +35,10 @@ namespace tp
 
     enum class adc_pin
     {
-        GPIO_26 = 26,
-        GPIO_27 = 27,
-        GPIO_28 = 28,
-        GPIO_29 = 29,
+        GPIO_26 = (uint32_t)gpio_number::GPIO_26,
+        GPIO_27 = (uint32_t)gpio_number::GPIO_27,
+        GPIO_28 = (uint32_t)gpio_number::GPIO_28,
+        GPIO_29 = (uint32_t)gpio_number::GPIO_29,
     };
  
     class adc
