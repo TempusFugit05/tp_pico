@@ -41,18 +41,34 @@ namespace tp
 
     class gpio
     {
-        private:
-            int gpio_number;
+        protected:
+            uint32_t pin;
         
         public:
-            gpio(int gpio_number);
-            gpio(int gpio_number, tp::GPIO_FUNCTION function);
-            void direction(tp::GPIO_INPUT_DIRECTION direction) const;
-            void set_function(tp::GPIO_FUNCTION function) const;
-            void output_flip() const;
-            void output_set(bool value) const;
-            bool input_read() const;
-            uint32_t get_gpio_number() const; 
+
+            enum class function
+            {
+                SPI = 1,
+                UART = 2,
+                I2C = 3,
+                PWM = 4,
+                SIO = 5, // single-cycle io (digital pin).
+                PIO0 = 6,
+                PIO1 = 7,
+                CLOCK = 8,
+                USB = 9,
+            };
+
+            gpio(tp::gpio_number pin);
+            gpio(tp::gpio_number pin, function function);
+
+            /**
+             * @brief Set the functionality of the gpio pin.
+             * 
+             * @param function The function to be set.
+             */
+            void set_function(function function) const;
+            tp::gpio_number get_gpio_number() const;
     };
 
 } // namespace tp

@@ -3,7 +3,8 @@
 
 #include <cstdint>
 
-# include <pico_types.h>
+#include "pico_system.h"
+#include "pico_types.h"
 
 namespace tp
 {
@@ -18,11 +19,11 @@ namespace tp
     {
         public:
             static core_id get_core_id();
-            static void interrupt_enable(tp::INTERRUPT_REGISTER interrupt_register);
-            static void reset_peripheral(tp::PERIPHERAL peripheral, uint32_t value=1);
-    };
+            static void interrupt_enable(tp::interrupt_register interrupt_register);
+            static void reset_peripheral(tp::peripheral peripheral, uint32_t value=1);
 
-    // extern system system;
+            class clock;
+    };
 
 } // namespace tp
 #endif // PICO_SYSTEM_H

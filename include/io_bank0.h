@@ -11,8 +11,6 @@ namespace tp
     {
         public:
             static void reset();
-            static void set_sio_register(int pin, tp::GPIO_ACTION sio_register, uint32_t value=1);
-            static uint32_t get_sio_register(int pin, tp::GPIO_ACTION sio_register);
     };
 
 } // namespace tp

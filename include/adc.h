@@ -7,17 +7,18 @@ namespace tp
 {
     #define ADC_RESOLUTION_BITS (12)
 
-    enum class adc_register
+    struct adc_registers
     {
-        CS = (uint32_t)tp::register_offsets::ADC + 0x00, // adc control and status.
-        RESULT = (uint32_t)tp::register_offsets::ADC + 0x04, // Result of the last conversion (bits 0 - 11).
-        FCS = (uint32_t)tp::register_offsets::ADC + 0x08,
-        FIFO = (uint32_t)tp::register_offsets::ADC + 0x0c,
-        DIV = (uint32_t)tp::register_offsets::ADC + 0x10,
-        INTR = (uint32_t)tp::register_offsets::ADC + 0x14,
-        INTE = (uint32_t)tp::register_offsets::ADC + 0x18,
-        INTF = (uint32_t)tp::register_offsets::ADC + 0x1c,
-        INTS = (uint32_t)tp::register_offsets::ADC + 0x20,
+        public:
+            static uint32_t* const cs;
+            static uint32_t* const result;
+            static uint32_t* const fcs;
+            static uint32_t* const fifo;
+            static uint32_t* const div;
+            static uint32_t* const intr; // See fc_clock_sources for available clock sources.
+            static uint32_t* const inte;
+            static uint32_t* const intf;
+            static uint32_t* const ints;
     };
 
     enum class cs_bits
