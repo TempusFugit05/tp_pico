@@ -28,7 +28,7 @@ set(PICO_BOARD pico CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(test C CXX ASM)
+project(tp_pico C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
@@ -37,25 +37,48 @@ pico_sdk_init()
 
 file(GLOB_RECURSE sources "include/*.h" "src/*.cpp")
 
-add_executable(test main.cpp ${sources})
+add_executable(tp_pico main.cpp ${sources})
 
-pico_set_program_name(test "test")
-pico_set_program_version(test "0.1")
+pico_set_program_name(tp_pico "tp_pico")
+pico_set_program_version(tp_pico "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(test 1)
-pico_enable_stdio_usb(test 1)
+# pico_enable_stdio_uart(tp_pico 1)
+pico_enable_stdio_usb(tp_pico 1)
 
-# Add the standard library to the build
-target_link_libraries(test
+# # # Add the standard library to the build
+target_link_libraries(tp_pico
         pico_stdlib)
 
 # Add the standard include files to the build
-target_include_directories(test PRIVATE
+target_include_directories(tp_pico PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
 
-target_include_directories(test PRIVATE "include")
+target_include_directories(tp_pico PRIVATE "include")
 
-    pico_add_extra_outputs(test)
+    pico_add_extra_outputs(tp_pico)
 
+target_compile_options(tp_pico PRIVATE
+    # -Werror
+    -Wall
+    -Wextra
+    -Wshadow
+    -Wunused
+
+    -Wsign-conversion
+    # -Wconversion
+    -Wcast-align
+    -Wuseless-cast
+    -Wdouble-promotion
+
+    -Wimplicit-fallthrough
+    -Wnull-dereference
+    -Wlogical-op
+    -Wduplicated-branches
+    -Wduplicated-cond
+    -Wmisleading-indentation
+    -Wextra-semi
+    -Wredundant-decls
+    -pedantic
+)

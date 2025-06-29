@@ -37,29 +37,74 @@ namespace tp
         DIED = 28,
     };
 
-    // clock frequency counter
-    struct fc
-    {
-        public:
-            static uint32_t* const ref;
-            static uint32_t* const min_hrz;
-            static uint32_t* const max_hrz;
-            static uint32_t* const delay;
-            static uint32_t* const interval;
-            static uint32_t* const src; // See fc_clock_sources for available clock sources.
-            static uint32_t* const status;
-            static uint32_t* const result;
-    };
-
     class tp::system::clock
     {
         public:
+
+        // clock frequency counter
+            struct fc
+            {
+                public:
+                    static uint32_t* const ref;
+                    static uint32_t* const min_hrz;
+                    static uint32_t* const max_hrz;
+                    static uint32_t* const delay;
+                    static uint32_t* const interval;
+                    static uint32_t* const src; // See fc_clock_sources for available clock sources.
+                    static uint32_t* const status;
+                    static uint32_t* const result;
+            };
+
+            /**
+             * @brief Get the frequency of the reference clock (ref_clk).
+             * 
+             * @return uint32_t The frequency of the reference clock in hrz.
+             * 
+             * @todo Find a way to get the actual reference clock frequency instead of a hardcoded value.
+             */
             static uint32_t get_ref_clock_freq();
+
+            /**
+             * @brief Set the accuracy of the frequency counter.
+             * 
+             * @param accuracy The accuracy of the measurement (valid values range from 0 - 15).
+             * 
+             * @details This sets the measurement interval of the measurement. 
+             *          Longer intervals give better accuracy.
+             *          The default interval is 250us.
+             *          The interval is given by 0,96us * 2 ** accuracy.
+             */
             static void set_accuracy(const uint32_t accuracy);
+
+            /**
+             * @brief Set the reference frequency (the frequency of ref_clk in khz).
+             * 
+             * @param frequency The frequency of ref_clk. 
+             */
             static void set_ref_frequency(const uint32_t frequency);
+            
+            /**
+             * @brief Start the frequency measurement.
+             * 
+             * @param source The clock to measure.
+             */
             static void start_measurement(fc_clock_sources source);
+
+            /**
+             * @brief Check if the frequency measurement is done.
+             * 
+             * @return true if measurement is done.
+             * @return false if measurement is still ongoing.
+             */
             static bool frequency_measure_done();
-            static float get_frequency(fc_clock_sources source);
+
+            /**
+             * @brief Get the frequency of a clock.
+             * 
+             * @param source The clock to measure.
+             * @return The measured frequency in hz.
+             */
+            static uint32_t get_frequency(fc_clock_sources source);
     };
 
 } // namespace tp

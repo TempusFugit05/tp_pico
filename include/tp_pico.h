@@ -1,5 +1,5 @@
-#ifndef TP_PICO
-#define TP_PICO
+#ifndef TP_PICO_H
+#define TP_PICO_H
 
 #include "pwm.h"
 #include "adc.h"
@@ -7,4 +7,4 @@
 #include "io_bank0.h"
 #include "pico_types.h"
 
-#endif // TP_PICO
+#endif // TP_PICO_H

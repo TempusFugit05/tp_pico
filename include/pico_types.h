@@ -4,6 +4,9 @@
 #include <stdint.h>
 namespace tp
 {
+    typedef void (**vtable)(void);
+    typedef void (*isr)(void);
+
     struct register_offsets
     {
         public:
@@ -14,48 +17,27 @@ namespace tp
             static uint32_t const clock;
             static uint32_t const sio; // See fc_clock_sources for available clock sources.
             static uint32_t const cortex;
-            static uint32_t const nvic_iser;
+            static uint32_t const nvic;
     };
 
-    // enum class register_offsets : uint32_t
-    // {
-    //     RESET = 0x4000c000,
-    //     BANK0 = 0x40014000, // io bank 0 registers memory address start.
-    //     ADC = 0x4004c000, // adc registers memory address start.
-    //     PWM = 0x40050000, // pwm registers memory address start.
-    //     CLOCK = 0x40008000,
-    //     SIO = 0xd0000000, // Sio registers memory address start.
-    //     CORTEX = 0xe0000000,
-    //     NVIC_ISER = 0xe1000000,
-    // };
-
-    enum class reset_register
+    struct memory_offsets
     {
-        DONE = 0x8, // This register is set when a peripheral is done resetting.
+        public:
+            static uint32_t const rom;
+            static uint32_t const xip;
+            static uint32_t const sram;
+            static uint32_t const apb;
+            static uint32_t const ahb;
+            static uint32_t const io_port;
+            static uint32_t const cortex;
     };
 
-    enum class peripheral
+    enum class core_id
     {
-        IO_BANK0 = 5,
+        CORE_0 = 0,
+        CORE_1 = 1,
     };
 
-    enum class interrupt_register
-    {
-        TIMER_IRQ_0 = 0,
-        TIMER_IRQ_1 = 1,
-        TIMER_IRQ_2 = 2,
-        TIMER_IRQ_3 = 3,
-        PWM_IRQ_WRAP = 4,
-        USBCTRL_IRQ = 5,
-        XIP_IRQ = 6,
-        PIO0_IRQ_0 = 7,
-        PIO0_IRQ_1 = 8,
-        PIO1_IRQ_0 = 9,
-        PIO1_IRQ_1 = 10,
-        DMA_IRQ_0 = 11,
-        DMA_IRQ_1 = 12,
-        IO_IRQ_BANK0 = 13
-    };
-} // namespace tp_pico
+} // namespace pico
 
 #endif // PICO_TYPES_H

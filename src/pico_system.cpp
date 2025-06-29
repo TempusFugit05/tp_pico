@@ -1,18 +1,33 @@
-#include "pico_system.h"
+#include "pico/stdlib.h"
+
+#include "nvic.h"
 #include "pico_types.h"
+#include "interrupt.h"
+#include "binary_helpers.h"
+
+#include "pico_system.h"
+
+uint32_t* const tp::system::reset_registers::reset = (uint32_t*)(tp::register_offsets::reset + 0x0);
+uint32_t* const tp::system::reset_registers::wdsel = (uint32_t*)(tp::register_offsets::reset + 0x4);
+uint32_t* const tp::system::reset_registers::done =  (uint32_t*)(tp::register_offsets::reset + 0x8);
+
+
+tp::system::system()
+{
+    stdio_init_all();
+    tp::nvic::assign_isr(tp::nvic::interrupt::IO_IRQ_BANK0, tp::gpio_isr);
+    tp::nvic::enable_interrupt(tp::nvic::interrupt::IO_IRQ_BANK0);
+}
+
+tp::system tp::system::_instance = tp::system();
 
 tp::core_id tp::system::get_core_id()
 {
-    return (tp::core_id)*(uint32_t*)tp::register_offsets::sio;
+    return (tp::core_id) *(uint32_t*)tp::register_offsets::sio;
 }
 
-void tp::system::interrupt_enable(tp::interrupt_register interrupt_register)
+void tp::system::reset_peripheral(tp::system::peripheral peripheral)
 {
-    *(uint32_t*)(tp::register_offsets::cortex + (uint32_t)tp::register_offsets::nvic_iser) = 1 << (uint32_t)interrupt_register;
-}
-
-void tp::system::reset_peripheral(tp::peripheral peripheral, uint32_t value)
-{
-    *(uint32_t*)(tp::register_offsets::reset) &= ~(value << (uint32_t)peripheral); // Reset the peripheral.
-    while(!(tp::register_offsets::reset + (uint32_t)tp::reset_register::DONE & (value << (uint32_t)peripheral))); // Wait for reset to finish.
+    *(uint32_t*)(tp::register_offsets::reset) |= (uint32_t)1 << (uint32_t)peripheral; // Reset the peripheral.
+    while(!(GET_BIT(*tp::system::reset_registers::done, (uint32_t)peripheral))); // Wait for reset to finish.
 }

@@ -36,23 +36,51 @@ namespace tp
 
     enum class adc_pin
     {
-        GPIO_26 = (uint32_t)gpio_number::GPIO_26,
-        GPIO_27 = (uint32_t)gpio_number::GPIO_27,
-        GPIO_28 = (uint32_t)gpio_number::GPIO_28,
-        GPIO_29 = (uint32_t)gpio_number::GPIO_29,
+        GPIO_26 = (uint32_t)gpio::pin_number::GPIO_26,
+        GPIO_27 = (uint32_t)gpio::pin_number::GPIO_27,
+        GPIO_28 = (uint32_t)gpio::pin_number::GPIO_28,
+        GPIO_29 = (uint32_t)gpio::pin_number::GPIO_29,
     };
  
-    class adc
+    class adc : gpio
     {
-        private:
-            uint32_t gpio_number;
-
         public:
             adc(const adc_pin gpio_number);
-            void enable(bool start) const;
-            void start_conversion() const;
+            
+            /**
+             * @brief Enable the adc peripheral.
+             * 
+             * @param enable true to enable adc, false to disable.
+             * 
+             * @warning Disabling the adc will disable measuring from all pins.
+             */
+            static void enable(bool enable);
+
+            /**
+             * @brief Start an adc measurement.
+             */
+            void start_measurement() const;
+
+            /**
+             * @brief Check if the measurement is done.
+             * 
+             * @return true if measurement is done.
+             * @return false if measurement is still ongoing.
+             */
             bool is_ready() const;
+
+            /**
+             * @brief Read the adc measurement in raw form (0 - 4095).
+             * 
+             * @return The value measurement.
+             */
             uint32_t read_raw() const;
+
+            /**
+             * @brief Read the adc measurement as a float between 0 - 1.
+             * 
+             * @return The measurement as a float between 0 (0 volt) - 1 (3.3 volt).
+             */
             float read() const;
     };
 

@@ -95,6 +95,12 @@
         "cfenv": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
-    }
+        "variant": "cpp",
+        "bootrom_constants.h": "c",
+        "platform.h": "c",
+        "climits": "cpp"
+    },
+    "cSpell.words": [
+        "nvic"
+    ]
 }

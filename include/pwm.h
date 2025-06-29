@@ -7,7 +7,7 @@
 
 namespace tp
 {
-    constexpr uint8_t PWM_DIV_MAX_FRACTION = 16;
+    constexpr uint8_t PWM_DIV_MAX_FRACTION = 15;
 
     enum class pwm_register
     {
@@ -61,13 +61,13 @@ namespace tp
     class pwm : tp::gpio
     {    
         private:
-            uint8_t m_slice;
+            uint32_t m_slice;
             tp::pwm_channel m_channel;
             float m_duty_cycle;
 
             uint32_t* register_to_address(const tp::pwm_register pwm_register) const;
         public:
-            pwm(const tp::gpio_number pin, const uint16_t resolution = uint16_t(-1), const float duty_cycle = 0);
+            pwm(const tp::gpio::pin_number gpio_pin, const uint16_t resolution = uint16_t(-1), const float duty_cycle = 0);
 
             /**
              * @brief Get the slice of the pwm pin.
@@ -113,7 +113,7 @@ namespace tp
             void set_level(uint16_t level) const;
             
             /**
-             * @brief Get the level value of the pwm channel.
+             * @brief Get the level value of the pwm channel (CC register).
              * 
              * @return The level of the pwm channel.
              */
@@ -124,8 +124,6 @@ namespace tp
              * 
              * @param integer The integer part of the divide.
              * @param fraction The fraction part of the divider (up to 15/16).
-             * 
-             * @todo Figure out a better interface for this.
              */
             void set_divider(uint8_t integer, uint8_t fraction) const;
 
@@ -175,6 +173,6 @@ namespace tp
              */
             float get_duty_cycle() const;
     };
-} // namespace tp_pico
+} // namespace pico
 
 #endif // PWM_H
