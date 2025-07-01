@@ -26,19 +26,6 @@ uint32_t* const tp::system::clock::fc::src  = (uint32_t*)(tp::register_offsets::
 uint32_t* const tp::system::clock::fc::status  = (uint32_t*)(tp::register_offsets::clock + 0x98);
 uint32_t* const tp::system::clock::fc::result  = (uint32_t*)(tp::register_offsets::clock + 0x9c);
 
-#include "adc.h"
-
-uint32_t* const tp::adc_registers::cs = (uint32_t*)(tp::register_offsets::adc + 0x00);
-uint32_t* const tp::adc_registers::result = (uint32_t*)(tp::register_offsets::adc + 0x04);
-uint32_t* const tp::adc_registers::fcs = (uint32_t*)(tp::register_offsets::adc + 0x08);
-uint32_t* const tp::adc_registers::fifo = (uint32_t*)(tp::register_offsets::adc + 0x0c);
-uint32_t* const tp::adc_registers::div = (uint32_t*)(tp::register_offsets::adc + 0x10);
-uint32_t* const tp::adc_registers::intr = (uint32_t*)(tp::register_offsets::adc + 0x14);
-uint32_t* const tp::adc_registers::inte = (uint32_t*)(tp::register_offsets::adc + 0x18);
-uint32_t* const tp::adc_registers::intf = (uint32_t*)(tp::register_offsets::adc + 0x1c);
-uint32_t* const tp::adc_registers::ints = (uint32_t*)(tp::register_offsets::adc + 0x20);
-
-
 #include "pico_types.h"
 
 uint32_t const tp::register_offsets::reset = 0x4000c000;

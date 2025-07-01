@@ -12,6 +12,14 @@ namespace tp
     class system
     {
         private:
+            /**
+             * @brief This is a constructor used for initialization of the system before main is called.
+             */
+            system();
+            static tp::system _instance; // This is simply used for initializing the system.
+
+        public:
+
             struct reset_registers
             {
                 public:
@@ -50,13 +58,6 @@ namespace tp
             };
 
             /**
-             * @brief This is a constructor used for initialization of the system before main is called.
-             */
-            system();
-            static tp::system _instance; // This is simply used for initializing the system.
-
-        public:
-            /**
              * @brief Get the core id of the executing core.
              * 
              * @return The core id of the executing core.
@@ -69,6 +70,8 @@ namespace tp
              * @param peripheral The peripheral to reset.
              */
             static void reset_peripheral(peripheral peripheral);
+
+            static float cpu_temp();
 
             class clock;
     };

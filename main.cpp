@@ -25,6 +25,6 @@ int main()
 
     while (true)
     {
-        printf("I AM ALIVE\n");
+        printf("%f\n", tp::system::cpu_temp());
     }
 }

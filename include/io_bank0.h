@@ -7,6 +7,7 @@
 
 namespace tp
 {
+
     class io_bank0
     {
         public:
@@ -25,4 +26,5 @@ namespace tp
     };
 
 } // namespace tp
+
 #endif // IO_BANK0_H
