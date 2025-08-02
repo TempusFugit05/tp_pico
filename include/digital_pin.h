@@ -1,5 +1,5 @@
-#ifndef DIGITAL_PIN_H
-#define IGITAL_PIN_H
+#ifndef TP_DIGITAL_PIN_H
+#define TP_DIGITAL_PIN_H
 
 #include "gpio.h"
 

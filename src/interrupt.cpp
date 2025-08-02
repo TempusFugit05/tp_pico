@@ -1,8 +1,8 @@
-// #include <cstring>
-// #include <stdio.h>
+#include <stdio.h>
 
 #include "gpio.h"
 #include "pico_system.h"
+#include "digital_pin.h"
 
 #include "interrupt.h"
 
@@ -83,6 +83,7 @@ inline void set_gpio_isr_helper(uint32_t pin_number, tp::gpio::irq_mask irq, con
         callback_arr[pin_number] = isr;
     }
 }
+
 void tp::set_gpio_isr(const uint32_t intr_mask, const tp::isr isr, const uint32_t pin_number)
 {
     uint32_t* const config_base = (tp::system::get_core_id() == tp::core_id::CORE_0) ? tp::io_bank0::registers::proc0_inte : tp::io_bank0::registers::proc1_inte;

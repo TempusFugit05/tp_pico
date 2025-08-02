@@ -10,26 +10,27 @@ namespace tp
     struct register_offsets
     {
         public:
-            static uint32_t const reset;
-            static uint32_t const bank0;
-            static uint32_t const adc;
-            static uint32_t const pwm;
-            static uint32_t const clock;
-            static uint32_t const sio; // See fc_clock_sources for available clock sources.
-            static uint32_t const cortex;
-            static uint32_t const nvic;
+            constexpr static uint32_t const clock =    0x40008000;
+            constexpr static uint32_t const reset =    0x4000c000;
+            constexpr static uint32_t const bank0 =    0x40014000;
+            constexpr static uint32_t const adc =      0x4004c000;
+            constexpr static uint32_t const pwm =      0x40050000;
+            constexpr static uint32_t const rosc =     0x40060000;
+            constexpr static uint32_t const sio =      0xd0000000; // See fc_clock_sources for available clock sources.
+            constexpr static uint32_t const cortex =   0xe0000000;
+            constexpr static uint32_t const nvic =     0xe1000000;
     };
 
     struct memory_offsets
     {
         public:
-            static uint32_t const rom;
-            static uint32_t const xip;
-            static uint32_t const sram;
-            static uint32_t const apb;
-            static uint32_t const ahb;
-            static uint32_t const io_port;
-            static uint32_t const cortex;
+            constexpr static uint32_t const rom =        0x00000000;
+            constexpr static uint32_t const xip =        0x10000000;
+            constexpr static uint32_t const sram =       0x20000000;
+            constexpr static uint32_t const apb =        0x40000000;
+            constexpr static uint32_t const ahb =        0x50000000;
+            constexpr static uint32_t const io_port =    0xd0000000;
+            constexpr static uint32_t const cortex =     0xe0000000;    
     };
 
     enum class core_id

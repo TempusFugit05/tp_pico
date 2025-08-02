@@ -3,7 +3,10 @@
 #include <math.h>
 
 #include "pico/stdlib.h"
-#include "tp_pico.h"
+#include "pico_system.h"
+#include "pwm.h"
+#include "adc.h"
+#include "clock.h"
 
 #define REPEAT(count) for (size_t _i = 0; _i < count; _i++)
 
@@ -22,26 +25,26 @@ constexpr float B = 246.942;
 
 constexpr int NOTE_LEN = 1250;
 
-tp::pwm led2 = tp::pwm(17, -1);
-tp::pwm led = tp::pwm(25);
+tp::pwm buzzer = tp::pwm(tp::gpio::pin_number::GPIO_16);
+tp::pwm led = tp::pwm(tp::gpio::pin_number::GPIO_25);
 
 void play_note(const float note, const float time)
 {
     const uint32_t delay = NOTE_LEN / time;
     if(note == 0)
     {
-        led2.enable(false);
+        buzzer.enable(false);
         led.set_duty_cycle(0);
-        sleep_ms(delay);
+        tp::system::wait_ms(delay);
         return;
     }
     led.set_duty_cycle(std::max(std::min((((float)note / (E * 4)) * 100) - (((float)C / (E * 4)) * 100), (float)100), (float)2));
-    led2.enable(true);
-    led2.set_frequency(note);
-    sleep_ms((delay * 4) / 5);
+    buzzer.enable(true);
+    buzzer.set_frequency(note);
+    tp::system::wait_ms((delay * 4) / 5);
     led.set_duty_cycle(0);
-    led2.enable(false);
-    sleep_ms(delay / 5);
+    buzzer.enable(false);
+    tp::system::wait_ms(delay / 5);
 }
 
 void intro()
@@ -143,23 +146,15 @@ void funky_section()
     play_note(0, 4);
 }
 
-
-
-void isr_dma_0()
-{
-
-}
-
 int main()
 {
     stdio_init_all();
     
-    tp::io_bank0::reset();
-
     led.enable(true);
-    led2.set_duty_cycle(50);
+    buzzer.set_duty_cycle(50);
+    buzzer.set_frequency(1000);
+    // led2.enable(true);
 
-    tp::adc test = tp::adc(tp::adc_pin::GPIO_26);
 
     while (true)
     {

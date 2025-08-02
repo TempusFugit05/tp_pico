@@ -1,0 +1,6 @@
+#ifndef TP_SYSCFG_H
+#define TP_SYSCFG_H
+
+#define REFERENCE_CLOCK_FREQUENCY (6000000)
+
+#endif // TP_SYSCFG_H

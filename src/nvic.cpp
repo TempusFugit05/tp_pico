@@ -10,6 +10,11 @@ uint32_t* const tp::nvic::registers::icpr =     (uint32_t*)(tp::register_offsets
 uint32_t* const tp::nvic::registers::ipr_base = (uint32_t*)(tp::register_offsets::cortex + 0xe400);
 uint32_t* const tp::nvic::registers::vtor =     (uint32_t*)(tp::register_offsets::cortex + 0xed08);
 
+void tp::nvic::set_exception_handler(const hw_exception exception_type, const tp::isr handler)
+{
+    exception_table()[(uint32_t)exception_type] = handler;
+}
+
 void tp::nvic::enable_interrupt(const tp::nvic::interrupt interrupt)
 {
     *tp::nvic::registers::iser |= (1 << (uint32_t)interrupt);
@@ -32,7 +37,7 @@ void tp::nvic::clear_pending_interrupt(const tp::nvic::interrupt interrupt)
 
 tp::vtable tp::nvic::irq_vtable()
 {
-    return tp::nvic::interrupt_table() + tp::nvic::VTABLE_IRQ_START;
+    return tp::nvic::exception_table() + tp::nvic::VTABLE_IRQ_START;
 }
 
 void tp::nvic::assign_isr(const tp::nvic::interrupt interrupt, const tp::isr handler)
@@ -40,9 +45,8 @@ void tp::nvic::assign_isr(const tp::nvic::interrupt interrupt, const tp::isr han
     irq_vtable()[(uint32_t)interrupt] = handler;
 }
 
-tp::vtable tp::nvic::interrupt_table()
+tp::vtable tp::nvic::exception_table()
 {
     constexpr const uint32_t vtor_reg_offset = 7;
-    uint32_t offset =  CLEAR_RIGHT(*tp::nvic::registers::vtor, vtor_reg_offset);
-    return (tp::vtable)(offset + tp::memory_offsets::sram);
+    return (tp::vtable)(CLEAR_RIGHT(*tp::nvic::registers::vtor, vtor_reg_offset));
 }

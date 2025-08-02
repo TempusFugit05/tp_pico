@@ -16,7 +16,9 @@ namespace tp
              * @brief This is a constructor used for initialization of the system before main is called.
              */
             system();
+            static uint64_t elapsed_time_us;
             static tp::system _instance; // This is simply used for initializing the system.
+            static void systick_exception_handler();
 
         public:
 
@@ -26,6 +28,15 @@ namespace tp
                     static uint32_t* const reset;
                     static uint32_t* const wdsel;
                     static uint32_t* const done;
+            };
+
+            struct systick_registers
+            {
+                public:
+                    static uint32_t* const csr;
+                    static uint32_t* const rvr;
+                    static uint32_t* const cvr;
+                    static uint32_t* const calib;
             };
 
             enum class peripheral
@@ -71,9 +82,21 @@ namespace tp
              */
             static void reset_peripheral(peripheral peripheral);
 
-            static float cpu_temp();
+            static void enable_systick(const bool enable);
+            static void enable_systick_exception(const bool enable);
+            static void set_systick_reload_value(const uint32_t value);
+            static uint32_t get_systick_reload_value();
+            static uint32_t get_systick_value();
+            static void set_systick_value(const uint32_t value);
 
-            class clock;
+            static void wait_us(uint64_t us);
+            static void wait_ms(uint32_t ms);
+
+            static float cpu_temp();
+            
+            static uint64_t current_time_us();
+
+            class clock;  
     };
 
 } // namespace tp

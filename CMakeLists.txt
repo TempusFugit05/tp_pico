@@ -59,6 +59,8 @@ target_include_directories(tp_pico PRIVATE "include")
 
     pico_add_extra_outputs(tp_pico)
 
+target_compile_definitions(tp_pico PRIVATE PARAM_ASSERTIONS_ENABLE_ALL=1)
+
 target_compile_options(tp_pico PRIVATE
     # -Werror
     -Wall

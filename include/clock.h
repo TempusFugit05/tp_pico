@@ -1,5 +1,5 @@
-#ifndef CLOCK_H
-#define CLOCK_H
+#ifndef TP_CLOCK_H
+#define TP_CLOCK_H
 
 #include "pico_types.h"
 #include "pico_system.h"
@@ -23,6 +23,7 @@ namespace tp
         USB = 0x0b,
         ADC = 0x0c,
         RTC = 0x0d,
+        NUM_CLOCKS,
     };
 
     enum class  fc0_status_bits
@@ -39,9 +40,15 @@ namespace tp
 
     class tp::system::clock
     {
+        private:
+            static uint32_t cached_frequencies[(uint32_t)fc_clock_sources::NUM_CLOCKS];
+            
+            clock();
+            friend clock clock();
+
         public:
 
-        // clock frequency counter
+            // clock frequency counter
             struct fc
             {
                 public:
@@ -55,6 +62,20 @@ namespace tp
                     static uint32_t* const result;
             };
 
+            struct rosc_registers
+            {
+                public:
+                    static uint32_t* const ctrl;
+                    static uint32_t* const freqa;
+                    static uint32_t* const freqb;
+                    static uint32_t* const dormant;
+                    static uint32_t* const div;
+                    static uint32_t* const phase;
+                    static uint32_t* const status;
+                    static uint32_t* const randombit;
+                    static uint32_t* const count;
+            };
+            
             /**
              * @brief Get the frequency of the reference clock (ref_clk).
              * 
@@ -105,9 +126,13 @@ namespace tp
              * @return The measured frequency in hz.
              */
             static uint32_t get_frequency(fc_clock_sources source);
+
+            static bool rosc_stable();
+
+            friend tp::system;
     };
 
 } // namespace tp
 
 
-#endif // CLOCK_H
+#endif // TP_CLOCK_H

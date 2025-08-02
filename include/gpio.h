@@ -1,5 +1,5 @@
-#ifndef GPIO_H
-#define GPIO_H
+#ifndef TP_GPIO_H
+#define TP_GPIO_H
 
 #include "io_bank0.h"
 #include "pico_types.h"
@@ -85,4 +85,4 @@ namespace tp
     };
 
 } // namespace tp
-#endif // GPIO_H
+#endif // TP_GPIO_H

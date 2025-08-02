@@ -16,6 +16,16 @@ namespace tp
              */
             static const uint32_t VTABLE_IRQ_START = 16;
 
+            enum class hw_exception
+            {
+                RESET = 1,
+                NMI = 2,
+                HARDFULT = 3,
+                SVCALL = 11,
+                PENDSV = 14,
+                SYSTICK = 15,
+            };
+
             enum class interrupt
             {
                 TIMER_IRQ_0 = 0,
@@ -65,14 +75,14 @@ namespace tp
             static void disable_interrupt(const interrupt interrupt);
             static void force_interrupt(const interrupt interrupt);
             static void clear_pending_interrupt(const interrupt interrupt);
-
+            static void set_exception_handler(const hw_exception exception_type, const tp::isr handler);
 
             /**
              * @brief Get the interrupt table.
              * 
              * @return tp::vtable 
              */
-            static tp::vtable interrupt_table();
+            static tp::vtable exception_table();
 
             /**
              * @brief Get the hardware interrupt table.

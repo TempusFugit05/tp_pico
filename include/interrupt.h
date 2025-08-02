@@ -11,6 +11,7 @@ namespace tp
     void clear_irq(const uint32_t interrupt_mask, const uint32_t gpio_number);
 
     void init_gpio_isr();
+
     void gpio_isr();
 
 } // namespace tp
