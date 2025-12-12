@@ -1,0 +1,9 @@
+<toolSet name="External Tools">
+  <tool name="Pico_Build" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="false" useConsole="true" showConsoleOnStdOut="false" showConsoleOnStdErr="false" synchronizeAfterRun="true">
+    <exec>
+      <option name="COMMAND" value="$APPLICATION_HOME_DIR$/bin/cmake/linux/x64/bin/cmake" />
+      <option name="PARAMETERS" value="--build /home/tempus/Documents/tp_pico/cmake-build-debug --target tp_pico -j 10 " />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Documents/tp_pico/" />
+    </exec>
+  </tool>
+</toolSet>

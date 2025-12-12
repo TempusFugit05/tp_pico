@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CLionExternalBuildManager">
+    <target id="d3c6b316-9756-4d28-a3b4-f234ad3844d4" name="Pico_Run" defaultType="TOOL">
+      <configuration id="5e84bdc3-12e4-453f-b798-c59a35ccf121" name="Pico_Run" toolchainName="Pi-Pico-Toolchain">
+        <build type="TOOL">
+          <tool actionId="Tool_External Tools_Pico_Build" />
+        </build>
+      </configuration>
+    </target>
+  </component>
+</project>
